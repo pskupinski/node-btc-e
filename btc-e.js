@@ -5,6 +5,7 @@ var request = require("request"),
 var BTCE = function(apiKey, secret) {
   var self = this;
   self.url = "https://btc-e.com/tapi";
+  self.publicApiUrl = "https://btc-e.com/api/2/";
   self.apiKey = apiKey;
   self.secret = secret;
 
@@ -25,12 +26,25 @@ var BTCE = function(apiKey, secret) {
 
     request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
       var result = JSON.parse(body);
-      if(err || result.success === 0) {
+      if(result.success === 0) {
         callback(result.error);
         return;
       }
 
       callback(false, result['return']);
+    });
+  };
+
+  self.makePublicApiRequest = function(pair, method, callback) {
+    request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
+      var result = JSON.parse(body);
+
+      if (result.error) {
+        callback(result.error);
+        return;
+      }
+
+      callback(false, result);
     });
   };
 
@@ -61,6 +75,18 @@ var BTCE = function(apiKey, secret) {
 
   self.cancelOrder = function(orderId, callback) {
     self.makeRequest('CancelOrder', {'order_id': orderId}, callback);
+  };
+
+  self.ticker = function(pair, callback) {
+    self.makePublicApiRequest(pair, 'ticker', callback);
+  };
+
+  self.trades = function(pair, callback) {
+    self.makePublicApiRequest(pair, 'trades', callback);
+  };
+
+  self.depth = function(pair, callback) {
+    self.makePublicApiRequest(pair, 'depth', callback);
   };
 };
 
