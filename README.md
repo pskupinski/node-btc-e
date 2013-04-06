@@ -1,4 +1,4 @@
 btc-e
 =====
 
-A node.js client for the btc-e api.
+An unoffocial node.js client for the [btc-e api](https://btc-e.com/api/documentation).
