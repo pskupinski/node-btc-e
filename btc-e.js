@@ -25,6 +25,11 @@ var BTCE = function(apiKey, secret) {
     };
 
     request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
+      if(err) {
+        callback(err);
+        return;
+      }
+
       var result = JSON.parse(body);
       if(result.success === 0) {
         callback(result.error);
@@ -37,6 +42,11 @@ var BTCE = function(apiKey, secret) {
 
   self.makePublicApiRequest = function(pair, method, callback) {
     request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
+      if(err) {
+        callback(err);
+        return;
+      }
+
       var result = JSON.parse(body);
 
       if (result.error) {
