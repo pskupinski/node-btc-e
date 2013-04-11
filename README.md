@@ -30,8 +30,8 @@ btce.ticker("ltc_btc", function(err, data) {
 
 ## Reference
 
-A method-by-method [reference](https://github.com/scud43/btc-e/wiki/API-Reference) is available on the wiki.
+A method-by-method [reference](https://github.com/scud43/node-btc-e/wiki/API-Reference) is available on the wiki.
 
 ## License
 
-This module is [ISC licensed](https://github.com/scud43/btc-e/blob/master/LICENSE.txt).
+This module is [ISC licensed](https://github.com/scud43/node-btc-e/blob/master/LICENSE.txt).
