@@ -1,6 +1,7 @@
 var request = require("request"),
     crypto = require("crypto"),
-    querystring = require("querystring");
+    querystring = require("querystring"),
+    nonce = require("nonce");
 
 var BTCE = function(apiKey, secret) {
   var self = this;
@@ -14,7 +15,7 @@ var BTCE = function(apiKey, secret) {
         sign,
         headers;
 
-    params.nonce = Math.round((new Date()).getTime()/1000);
+    params.nonce = nonce();
     params.method = method;
     queryString = querystring.stringify(params);
 
