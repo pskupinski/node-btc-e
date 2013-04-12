@@ -1,7 +1,6 @@
 var request = require("request"),
     crypto = require("crypto"),
-    querystring = require("querystring"),
-    nonce = require("nonce");
+    querystring = require("querystring");
 
 var BTCE = function(apiKey, secret) {
   var self = this;
@@ -15,7 +14,7 @@ var BTCE = function(apiKey, secret) {
         sign,
         headers;
 
-    params.nonce = nonce();
+    params.nonce = Math.round((new Date()).getTime() / 1000);
     params.method = method;
     queryString = querystring.stringify(params);
 
@@ -26,8 +25,8 @@ var BTCE = function(apiKey, secret) {
     };
 
     request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
-      if(err) {
-        callback(err);
+      if(err || response.statusCode !== 200) {
+        callback(err ? err : response.statusCode);
         return;
       }
 
@@ -43,8 +42,8 @@ var BTCE = function(apiKey, secret) {
 
   self.makePublicApiRequest = function(pair, method, callback) {
     request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
-      if(err) {
-        callback(err);
+      if(err || response.statusCode !== 200) {
+        callback(err ? err : response.statusCode);
         return;
       }
 
