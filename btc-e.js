@@ -14,6 +14,10 @@ var BTCE = function(apiKey, secret) {
         sign,
         headers;
 
+    if(!self.apiKey || !self.secret) {
+      throw "Must provide API key and secret to use the trade API.";
+    }
+
     params.nonce = Math.round((new Date()).getTime() / 1000);
     params.method = method;
     queryString = querystring.stringify(params);
