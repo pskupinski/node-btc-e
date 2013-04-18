@@ -4,10 +4,32 @@ var request = require("request"),
 
 var BTCE = function(apiKey, secret) {
   var self = this;
+  var nw_nonce = 1;
   self.url = "https://btc-e.com/tapi";
   self.publicApiUrl = "https://btc-e.com/api/2/";
   self.apiKey = apiKey;
   self.secret = secret;
+  var started = false;
+
+  self.setUpNonce = function() {
+      self.makeRequest('getInfo', {}, function(err, data) {
+		 if(!err)
+			console.log('Nonce OK...');
+		 else
+		 {
+			 var answer = err;
+			 if(answer.indexOf("invalid nonce parameter") != -1) {
+				 answer = answer.trim();
+				 arr = answer.split(' ');
+				 var last_nonce = arr[3].trim();
+				 nw_nonce = Number(last_nonce) + 1;
+				 console.log('Nonce set up ('+nw_nonce+')');
+			 }
+			 else
+				console.log("Nonce NOT OK!");
+		 }
+	  });
+  }
 
   self.makeRequest = function(method, params, callback) {
     var queryString,
@@ -17,11 +39,11 @@ var BTCE = function(apiKey, secret) {
     if(!self.apiKey || !self.secret) {
       throw "Must provide API key and secret to use the trade API.";
     }
-
-    params.nonce = Math.round((new Date()).getTime() / 1000);
+    params.nonce = nw_nonce;
+    //console.log("Params.nonce: "+params.nonce);
+    nw_nonce++;
     params.method = method;
     queryString = querystring.stringify(params);
-
     sign = crypto.createHmac("sha512", self.secret).update(new Buffer(queryString)).digest('hex').toString();
     headers = {
       'Sign': sign,
@@ -102,6 +124,7 @@ var BTCE = function(apiKey, secret) {
   self.depth = function(pair, callback) {
     self.makePublicApiRequest(pair, 'depth', callback);
   };
+
 };
 
 module.exports = BTCE;
