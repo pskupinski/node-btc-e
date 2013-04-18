@@ -14,7 +14,13 @@ var BTCE = require('btc-e'),
     // No need to provide keys if you're only using the public api methods.
     btcePublic = new BTCE();
     
+    
+    
+    
     btceTrade.setUpNonce();    //!!!Important!!!
+    
+    
+    
     
 // Public API method call.
 // Note: Could use "btceTrade" here as well.
@@ -41,3 +47,5 @@ A method-by-method [reference](https://github.com/scud43/node-btc-e/wiki/API-Ref
 ## License
 
 This module is [ISC licensed](https://github.com/scud43/node-btc-e/blob/master/LICENSE.txt).
+
+LTC tip jar: LYvvrvwFk1yMYFYdbzm3rm6qwjR8CURBjs
