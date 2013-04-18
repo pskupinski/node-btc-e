@@ -48,4 +48,4 @@ A method-by-method [reference](https://github.com/scud43/node-btc-e/wiki/API-Ref
 
 This module is [ISC licensed](https://github.com/scud43/node-btc-e/blob/master/LICENSE.txt).
 
-LTC tip jar: LYvvrvwFk1yMYFYdbzm3rm6qwjR8CURBjs
+LTC tips: LYvvrvwFk1yMYFYdbzm3rm6qwjR8CURBjs
