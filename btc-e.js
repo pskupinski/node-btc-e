@@ -2,12 +2,13 @@ var request = require("request"),
     crypto = require("crypto"),
     querystring = require("querystring");
 
-var BTCE = function(apiKey, secret) {
+var BTCE = function(apiKey, secret, nonceGenerator) {
   var self = this;
   self.url = "https://btc-e.com/tapi";
   self.publicApiUrl = "https://btc-e.com/api/2/";
   self.apiKey = apiKey;
   self.secret = secret;
+  self.nonce = nonceGenerator;
 
   self.makeRequest = function(method, params, callback) {
     var queryString,
@@ -18,7 +19,13 @@ var BTCE = function(apiKey, secret) {
       throw "Must provide API key and secret to use the trade API.";
     }
 
-    params.nonce = Math.round((new Date()).getTime() / 1000);
+    // If the user provided a function for generating the nonce, then use it.
+    if(self.nonce) {
+      params.nonce = self.nonce();
+    } else {
+      params.nonce = Math.round((new Date()).getTime() / 1000);
+    }
+
     params.method = method;
     queryString = querystring.stringify(params);
 
