@@ -40,8 +40,7 @@ btc-e expects every nonce given to be greater than the previous one for each api
 ```javascript
 var BTCE = require('btc-e'),
     fs = require('fs'),
-    currentNonce = fs.existsSync("nonce.json") ? JSON.parse(fs.readFileSync("nonce.json")) : 0;
-    
+    currentNonce = fs.existsSync("nonce.json") ? JSON.parse(fs.readFileSync("nonce.json")) : 0,
     // Provide a nonce generation function as the third parameter if desired.
     // The function must provide a number that is larger than the one before and must not
     // be larger than the 32-bit unsigned integer max value of 4294967294.
