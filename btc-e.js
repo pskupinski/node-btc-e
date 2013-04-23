@@ -17,6 +17,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
 
     if(!self.apiKey || !self.secret) {
       callback(new Error("Must provide API key and secret to use the trade API."));
+      return;
     }
 
     // If the user provided a function for generating the nonce, then use it.
