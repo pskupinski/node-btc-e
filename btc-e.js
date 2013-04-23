@@ -16,7 +16,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
         headers;
 
     if(!self.apiKey || !self.secret) {
-      throw "Must provide API key and secret to use the trade API.";
+      callback(new Error("Must provide API key and secret to use the trade API."));
     }
 
     // If the user provided a function for generating the nonce, then use it.
@@ -37,35 +37,35 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
 
     request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
-        callback(err ? err : response.statusCode);
+        callback(new Error(err ? err : response.statusCode));
         return;
       }
 
       var result = JSON.parse(body);
       if(result.success === 0) {
-        callback(result.error);
+        callback(new Error(result.error));
         return;
       }
 
-      callback(false, result['return']);
+      callback(null, result['return']);
     });
   };
 
   self.makePublicApiRequest = function(pair, method, callback) {
     request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
-        callback(err ? err : response.statusCode);
+        callback(new Error(err ? err : response.statusCode));
         return;
       }
 
       var result = JSON.parse(body);
 
       if (result.error) {
-        callback(result.error);
+        callback(new Error(result.error));
         return;
       }
 
-      callback(false, result);
+      callback(null, result);
     });
   };
 
