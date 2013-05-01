@@ -3,7 +3,7 @@ node-btc-e
 
 An unoffocial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) including public api methods(ticker, trades, depth).
 
-This fork fixes "Invalid nonce" error, but you are  required to call the 'setUpNonce()' function right after the BTCE object creation (see below). This function makes two http cals, so it takes about 10 seconds max. After that the module is ready to trade.
+__This fork fixes "Invalid nonce" error, but you are  required to call the 'setUpNonce()' function right after the BTCE object creation (see below). This function makes two http cals, so it takes about 10 seconds max. After that the module is ready to trade.__
 
 
 ## Usage
