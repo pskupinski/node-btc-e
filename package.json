@@ -1,13 +1,13 @@
 {
   "name": "btc-e",
   "description": "btc-e.com API client for node.js",
-  "homepage": "https://github.com/scud43/node-btc-e",
+  "homepage": "https://github.com/pskupinski/node-btc-e",
   "keywords": ["btc-e", "btc", "ltc", "bitcoin", "litecoin"],
   "author": "Preston Skupinski",
   "licenses": [
     {
       "type": "ISC",
-      "url": "https://github.com/scud43/node-btc-e/blob/master/LICENSE.txt"
+      "url": "https://github.com/pskupinski/node-btc-e/blob/master/LICENSE.txt"
     }
   ],
   "dependencies": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/scud43/node-btc-e"
+    "url": "https://github.com/pskupinski/node-btc-e"
   },
   "main": "btc-e.js",
   "engines": {
