@@ -69,10 +69,6 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
         return callback(new Error(error));
       }
 
-      if(result.error) {
-        return callback(new Error(result.error));
-      }
-
       callback(null, result);
     });
   };
