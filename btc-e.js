@@ -38,14 +38,18 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
 
     request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
-        callback(new Error(err ? err : response.statusCode));
-        return;
+        return callback(new Error(err ? err : response.statusCode));
       }
 
-      var result = JSON.parse(body);
+      var result;
+      try {
+        result = JSON.parse(body);
+      } catch(error) {
+        return callback(new Error(error));
+      }
+      
       if(result.success === 0) {
-        callback(new Error(result.error));
-        return;
+        return callback(new Error(result.error));
       }
 
       callback(null, result['return']);
@@ -55,15 +59,18 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
   self.makePublicApiRequest = function(pair, method, callback) {
     request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
-        callback(new Error(err ? err : response.statusCode));
-        return;
+        return callback(new Error(err ? err : response.statusCode));
       }
 
-      var result = JSON.parse(body);
+      var result;
+      try {
+        result = JSON.parse(body);
+      } catch(error) {
+        return callback(new Error(error));
+      }
 
-      if (result.error) {
-        callback(new Error(result.error));
-        return;
+      if(result.error) {
+        return callback(new Error(result.error));
       }
 
       callback(null, result);
