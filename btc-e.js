@@ -69,6 +69,10 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
         return callback(new Error(error));
       }
 
+      if(result.error) {
+        return callback(new Error(result.error));
+      }
+
       callback(null, result);
     });
   };
@@ -112,6 +116,10 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
 
   self.depth = function(pair, callback) {
     self.makePublicApiRequest(pair, 'depth', callback);
+  };
+
+  self.fee = function(pair, callback) {
+    self.makePublicApiRequest(pair, 'fee', callback);
   };
 };
 
