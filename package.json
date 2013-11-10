@@ -4,6 +4,9 @@
   "homepage": "https://github.com/pskupinski/node-btc-e",
   "keywords": ["btc-e", "btc", "ltc", "bitcoin", "litecoin"],
   "author": "Preston Skupinski",
+  "contributors": [
+    "Dmitry Shirokov <deadrunk@gmail.com>"
+  ],
   "licenses": [
     {
       "type": "ISC",
@@ -21,5 +24,5 @@
   "engines": {
     "node": ">=0.8"
   },
-  "version": "0.0.11"
+  "version": "0.0.12"
 }
