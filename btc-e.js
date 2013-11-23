@@ -47,7 +47,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
       } catch(error) {
         return callback(new Error(error));
       }
-      
+
       if(result.success === 0) {
         return callback(new Error(result.error));
       }
@@ -91,6 +91,15 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
 
   self.orderList = function(params, callback) {
     self.makeRequest('OrderList', params, callback);
+  };
+
+  self.activeOrders = function(pair, callback) {
+    if (!callback) {
+      callback = pair;
+      pair = null;
+    }
+
+    self.makeRequest('ActiveOrders', {pair: pair}, callback);
   };
 
   self.trade = function(pair, type, rate, amount, callback) {
