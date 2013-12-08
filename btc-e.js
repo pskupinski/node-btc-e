@@ -20,11 +20,14 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
       return;
     }
 
+    if (typeof self.nonceLast === 'undefined' || self.nonceLast < Math.ceil((new Date()).getTime() / 1000)) self.nonceLast = Math.ceil((new Date()).getTime() / 1000);
+    self.nonceLast++;
+    
     // If the user provided a function for generating the nonce, then use it.
     if(self.nonce) {
       params.nonce = self.nonce();
     } else {
-      params.nonce = Math.round((new Date()).getTime() / 1000);
+      params.nonce = self.nonceLast;
     }
 
     params.method = method;
