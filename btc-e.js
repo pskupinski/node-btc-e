@@ -29,7 +29,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
       // nonce throttle
       if (nonce === self.nonceLast) {
         setTimeout(function() {
-          self.makeRequest.call(self);
+          self.makeRequest(method, params, callback);
         }, 50);
         return;
       }
