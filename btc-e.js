@@ -36,7 +36,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
       'Key': self.apiKey
     };
 
-    request({ url: self.url, method: "POST", form: params, headers: headers }, function(err, response, body) {
+    request({ url: self.url, method: "POST", form: params, headers: headers, timeout: 5000 }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
         return callback(new Error(err ? err : response.statusCode));
       }
@@ -57,7 +57,7 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
   };
 
   self.makePublicApiRequest = function(pair, method, callback) {
-    request({ url: self.publicApiUrl + pair + '/' + method }, function(err, response, body) {
+    request({ url: self.publicApiUrl + pair + '/' + method, timeout: 5000 }, function(err, response, body) {
       if(err || response.statusCode !== 200) {
         return callback(new Error(err ? err : response.statusCode));
       }
