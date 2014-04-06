@@ -2,7 +2,13 @@
   "name": "btc-e",
   "description": "btc-e.com API client for node.js",
   "homepage": "https://github.com/pskupinski/node-btc-e",
-  "keywords": ["btc-e", "btc", "ltc", "bitcoin", "litecoin"],
+  "keywords": [
+    "btc-e",
+    "btc",
+    "ltc",
+    "bitcoin",
+    "litecoin"
+  ],
   "author": "Preston Skupinski",
   "contributors": [
     "Dmitry Shirokov <deadrunk@gmail.com>"
@@ -24,5 +30,5 @@
   "engines": {
     "node": ">=0.8"
   },
-  "version": "0.0.13"
+  "version": "0.0.14"
 }
