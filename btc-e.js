@@ -24,7 +24,19 @@ var BTCE = function(apiKey, secret, nonceGenerator) {
     if(self.nonce) {
       params.nonce = self.nonce();
     } else {
-      params.nonce = Math.round((new Date()).getTime() / 1000);
+      var nonce = Math.round((new Date()).getTime() / 1000);
+      
+      // nonce throttle
+      if (nonce === self.nonceLast) {
+        setTimeout(function() {
+          self.makeRequest(method, params, callback);
+        }, 50);
+        return;
+      }
+
+      params.nonce = nonce;
+
+      self.nonceLast = nonce;
     }
 
     params.method = method;
