@@ -38,7 +38,7 @@ The constructor supports an optional third parameter for passing in various opti
 When passed as a hash, the following options are supported:
 * agent - The HTTPS agent to use when making requests
 * timeout - The timeout to use when making requests, defaults to 5 seconds
-* nonce - A nonce generation function (see `Custom nonce generation` below)
+* nonce - A nonce generation function ([Custom nonce generation](#custom-nonce-generation))
 * tapi_url - The base url to use when making trade api requests, defaults to `https://btc-e.com/tapi`
 * public_url - The base url to use when making public api requests, defaults to `https://btc-e.com/api/2/`
 
