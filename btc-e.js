@@ -47,7 +47,7 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
     try {
       result = JSON.parse(body);
     } catch(error) {
-      return callback(new Error(error));
+      return callback(error);
     }
 
     if(result.success === 0) {
@@ -69,7 +69,7 @@ BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
     try {
       result = JSON.parse(body);
     } catch(error) {
-      return callback(new Error(error));
+      return callback(error);
     }
 
     if(result.error) {
