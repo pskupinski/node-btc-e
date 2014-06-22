@@ -3,12 +3,29 @@ var request = require('request'),
     crypto = require('crypto'),
     querystring = require('querystring');
 
-var BTCE = function(apiKey, secret, nonceGenerator) {
+var BTCE = function(apiKey, secret, options) {
   this.url = 'https://btc-e.com/tapi';
   this.publicApiUrl = 'https://btc-e.com/api/2/';
+  this.timeout = 5000;
   this.apiKey = apiKey;
   this.secret = secret;
-  this.nonce = nonceGenerator;
+
+  if (typeof options === "function") {
+    this.nonce = options;
+  } else if (options) {
+    this.nonce = options.nonce;
+    this.agent = options.agent;
+
+    if (typeof options.timeout !== 'undefined') {
+      this.timeout = options.timeout;
+    }
+    if (typeof options.tapi_url !== 'undefined') {
+      this.url = options.tapi_url;
+    }
+    if (typeof options.public_url !== 'undefined') {
+      this.publicApiUrl = options.public_url;
+    }
+  }
 };
 
 BTCE.prototype.makeRequest = function(method, params, callback) {
@@ -38,7 +55,15 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
     'Key': self.apiKey
   };
 
-  request({ url: self.url, method: 'POST', form: params, headers: headers, timeout: 5000, strictSSL: false }, function(err, response, body) {
+  request({
+    url: self.url,
+    method: 'POST',
+    form: params,
+    headers: headers,
+    timeout: self.timeout,
+    agent: self.agent,
+    strictSSL: false
+  }, function(err, response, body) {
     if(err || response.statusCode !== 200) {
       return callback(new Error(err ? err : response.statusCode));
     }
@@ -60,7 +85,12 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
 
 BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
   var self = this;
-  request({ url: self.publicApiUrl + pair + '/' + method, timeout: 5000, strictSSL: false }, function(err, response, body) {
+  request({
+    url: self.publicApiUrl + pair + '/' + method,
+    timeout: self.timeout,
+    agent: self.agent,
+    strictSSL: false
+  }, function(err, response, body) {
     if(err || response.statusCode !== 200) {
       return callback(new Error(err ? err : response.statusCode));
     }
