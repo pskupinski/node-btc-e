@@ -1,3 +1,4 @@
+"use strict";
 var request = require("request"),
     crypto = require("crypto"),
     querystring = require("querystring");
