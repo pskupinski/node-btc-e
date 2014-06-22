@@ -1,11 +1,11 @@
-"use strict";
-var request = require("request"),
-    crypto = require("crypto"),
-    querystring = require("querystring");
+'use strict';
+var request = require('request'),
+    crypto = require('crypto'),
+    querystring = require('querystring');
 
 var BTCE = function(apiKey, secret, nonceGenerator) {
-  this.url = "https://btc-e.com/tapi";
-  this.publicApiUrl = "https://btc-e.com/api/2/";
+  this.url = 'https://btc-e.com/tapi';
+  this.publicApiUrl = 'https://btc-e.com/api/2/';
   this.apiKey = apiKey;
   this.secret = secret;
   this.nonce = nonceGenerator;
@@ -18,7 +18,7 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
       self = this;
 
   if(!self.apiKey || !self.secret) {
-    callback(new Error("Must provide API key and secret to use the trade API."));
+    callback(new Error('Must provide API key and secret to use the trade API.'));
     return;
   }
 
@@ -32,13 +32,13 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
   params.method = method;
   queryString = querystring.stringify(params);
 
-  sign = crypto.createHmac("sha512", self.secret).update(new Buffer(queryString)).digest('hex').toString();
+  sign = crypto.createHmac('sha512', self.secret).update(new Buffer(queryString)).digest('hex').toString();
   headers = {
     'Sign': sign,
     'Key': self.apiKey
   };
 
-  request({ url: self.url, method: "POST", form: params, headers: headers, timeout: 5000, strictSSL: false }, function(err, response, body) {
+  request({ url: self.url, method: 'POST', form: params, headers: headers, timeout: 5000, strictSSL: false }, function(err, response, body) {
     if(err || response.statusCode !== 200) {
       return callback(new Error(err ? err : response.statusCode));
     }
