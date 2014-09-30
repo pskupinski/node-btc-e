@@ -122,6 +122,10 @@ BTCE.prototype.tradeHistory = function(params, callback) {
   this.makeRequest('TradeHistory', params, callback);
 };
 
+BTCE.prototype.orderInfo = function(params, callback) {
+  this.makeRequest('OrderInfo', params, callback);
+};
+
 BTCE.prototype.orderList = function(params, callback) {
   this.makeRequest('OrderList', params, callback);
 };
