@@ -122,8 +122,11 @@ BTCE.prototype.tradeHistory = function(params, callback) {
   this.makeRequest('TradeHistory', params, callback);
 };
 
-BTCE.prototype.orderInfo = function(params, callback) {
-  this.makeRequest('OrderInfo', params, callback);
+BTCE.prototype.orderInfo = function(paramsOrOrderId, callback) {
+  var inputType = typeof paramsOrOrderId;
+  var input = (inputType === 'string' || inputType === 'number') ?
+    {order_id: paramsOrOrderId} : paramsOrOrderId;
+  this.makeRequest('OrderInfo', input, callback);
 };
 
 BTCE.prototype.orderList = function(params, callback) {
@@ -148,8 +151,11 @@ BTCE.prototype.trade = function(pair, type, rate, amount, callback) {
   }, callback);
 };
 
-BTCE.prototype.cancelOrder = function(orderId, callback) {
-  this.makeRequest('CancelOrder', {'order_id': orderId}, callback);
+BTCE.prototype.cancelOrder = function(paramsOrOrderId, callback) {
+  var inputType = typeof paramsOrOrderId;
+  var input = (inputType === 'string' || inputType === 'number') ?
+    {order_id: paramsOrOrderId} : paramsOrOrderId;
+  this.makeRequest('CancelOrder', input, callback);
 };
 
 BTCE.prototype.ticker = function(pair, callback) {
