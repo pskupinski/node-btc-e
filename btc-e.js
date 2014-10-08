@@ -106,7 +106,8 @@ BTCE.prototype.makePublicApiRequest = function(pair, method, callback, limit) {
     var result;
     try {
       result = JSON.parse(body);
-      //result = JSON.parse(body)[pair];
+      if (method == "depth")
+        result = JSON.parse(body)[pair];
     } catch(error) {
       return callback(error);
     }
@@ -179,8 +180,8 @@ BTCE.prototype.depth = function(pair, callback, limit) {
   this.makePublicApiRequest(pair, 'depth', callback, limit);
 };
 
-BTCE.prototype.trades = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'trades', callback);
+BTCE.prototype.trades = function(pair, callback, limit) {
+  this.makePublicApiRequest(pair, 'trades', callback, limit);
 };
 
 module.exports = BTCE;
