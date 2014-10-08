@@ -1,7 +1,7 @@
 node-btc-e
 =====
 
-An unoffocial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) including public api methods(info, ticker, depth, and trades).
+An unoffocial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) including public api methods(depth, fee, ticker, trades).
 
 ## Installation
 
@@ -19,17 +19,11 @@ var BTCE = require('btc-e'),
     // No need to provide keys if you're only using the public api methods.
     btcePublic = new BTCE();
 
-// Public API method call example 1.
+// Public API method call.
 // Note: Could use "btceTrade" here as well.
-btcePublic.ticket("ltc_btc", function(err, data) {
+btcePublic.ticker("ltc_btc", function(err, data) {
   console.log(err, data);
 });
-
-// Public API method call example 2.
-// Note: Optional integer field added as a third parameter in API v3
-btcePublic.depth("btc_usd", function(err, data) {
-  console.log(err, data);
-}, 3);
 
 // Trade API method call.
 btceTrade.getInfo(function(err, info) {
