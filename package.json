@@ -9,9 +9,16 @@
     "bitcoin",
     "litecoin"
   ],
-  "author": "Preston Skupinski",
+  "author": {
+    "name": "Preston Skupinski"
+  },
   "contributors": [
-    "Dmitry Shirokov <deadrunk@gmail.com>"
+    {
+      "name": "Dmitry Shirokov",
+      "email": "deadrunk@gmail.com",
+      "name": "Dawson Botsford",
+      "email": "dawsonbotsford@gmail.com"
+    }
   ],
   "licenses": [
     {
@@ -30,5 +37,31 @@
   "engines": {
     "node": ">=0.8"
   },
-  "version": "1.0.1"
+  "version": "1.0.1",
+  "gitHead": "c464ff8e22dbad7252f934063c87ff70b6f08485",
+  "bugs": {
+    "url": "https://github.com/pskupinski/node-btc-e/issues"
+  },
+  "_id": "btc-e@1.0.1",
+  "scripts": {},
+  "_shasum": "6c712e8bba93ae1ee2c2e325b4ccbadb32ad71f6",
+  "_from": "btc-e@",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "pskupinski",
+    "email": "preston.skupinski@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "pskupinski",
+      "email": "preston.skupinski@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "6c712e8bba93ae1ee2c2e325b4ccbadb32ad71f6",
+    "tarball": "http://registry.npmjs.org/btc-e/-/btc-e-1.0.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "http://registry.npmjs.org/btc-e/-/btc-e-1.0.1.tgz",
+  "readme": "ERROR: No README data found!"
 }

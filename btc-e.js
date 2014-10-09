@@ -5,7 +5,7 @@ var request = require('request'),
 
 var BTCE = function(apiKey, secret, options) {
   this.url = 'https://btc-e.com/tapi';
-  this.publicApiUrl = 'https://btc-e.com/api/2/';
+  this.publicApiUrl = 'https://btc-e.com/api/3/';
   this.timeout = 5000;
   this.apiKey = apiKey;
   this.secret = secret;
@@ -83,10 +83,18 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
   });
 };
 
-BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
+BTCE.prototype.makePublicApiRequest = function(pair, method, callback, limit) {
   var self = this;
+  var myurl = self.publicApiUrl + method;
+  limit = limit || 150;
+  if (method == "info");
+  if (method == "ticker")
+    myurl += '/' + pair;
+  if (method == "depth" || method == "trades")
+    myurl += '/' + pair + '?limit=' + limit;
+  console.log("MYURL: " + myurl);
   request({
-    url: self.publicApiUrl + pair + '/' + method,
+    url: myurl,
     timeout: self.timeout,
     agent: self.agent,
     strictSSL: false
@@ -98,6 +106,8 @@ BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
     var result;
     try {
       result = JSON.parse(body);
+      if (method == "depth")
+        result = JSON.parse(body)[pair];
     } catch(error) {
       return callback(error);
     }
@@ -158,20 +168,20 @@ BTCE.prototype.cancelOrder = function(paramsOrOrderId, callback) {
   this.makeRequest('CancelOrder', input, callback);
 };
 
+BTCE.prototype.info = function(callback) {
+  this.makePublicApiRequest("filler", 'info', callback);
+};
+
 BTCE.prototype.ticker = function(pair, callback) {
   this.makePublicApiRequest(pair, 'ticker', callback);
 };
 
-BTCE.prototype.trades = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'trades', callback);
+BTCE.prototype.depth = function(pair, callback, limit) {
+  this.makePublicApiRequest(pair, 'depth', callback, limit);
 };
 
-BTCE.prototype.depth = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'depth', callback);
-};
-
-BTCE.prototype.fee = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'fee', callback);
+BTCE.prototype.trades = function(pair, callback, limit) {
+  this.makePublicApiRequest(pair, 'trades', callback, limit);
 };
 
 module.exports = BTCE;
