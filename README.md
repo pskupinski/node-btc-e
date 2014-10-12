@@ -1,7 +1,7 @@
 node-btc-e
 =====
 
-An unoffocial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) including public api methods(depth, fee, ticker, trades).
+An unoffocial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) including v2 public api methods(depth, fee, ticker, and trades).
 
 ## Installation
 
