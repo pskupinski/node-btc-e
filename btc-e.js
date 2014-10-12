@@ -9,6 +9,7 @@ var BTCE = function(apiKey, secret, options) {
   this.timeout = 5000;
   this.apiKey = apiKey;
   this.secret = secret;
+  this._strictSSL = true;
 
   if (typeof options === "function") {
     this.nonce = options;
@@ -24,6 +25,9 @@ var BTCE = function(apiKey, secret, options) {
     }
     if (typeof options.public_url !== 'undefined') {
       this.publicApiUrl = options.public_url;
+    }
+    if (typeof options.strict_ssl !== 'undefined') {
+      this._strictSSL = !!options.strict_ssl;
     }
   }
 };
@@ -62,7 +66,7 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
     headers: headers,
     timeout: self.timeout,
     agent: self.agent,
-    strictSSL: false
+    strictSSL: self._strictSSL
   }, function(err, response, body) {
     if(err || response.statusCode !== 200) {
       return callback(new Error(err ? err : response.statusCode));
@@ -89,7 +93,7 @@ BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
     url: self.publicApiUrl + pair + '/' + method,
     timeout: self.timeout,
     agent: self.agent,
-    strictSSL: false
+    strictSSL: self._strictSSL
   }, function(err, response, body) {
     if(err || response.statusCode !== 200) {
       return callback(new Error(err ? err : response.statusCode));
