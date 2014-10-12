@@ -41,6 +41,7 @@ When passed as a hash, the following options are supported:
 * nonce - A nonce generation function ([Custom nonce generation](#custom-nonce-generation))
 * tapi_url - The base url to use when making trade api requests, defaults to `https://btc-e.com/tapi`
 * public_url - The base url to use when making public api requests, defaults to `https://btc-e.com/api/2/`
+* strict_ssl - `true` by default, but can be set to `false` if desired, such as if btc-e has problems with their SSL certificate again.
 
 ```javascript
 var BTCE = require('btc-e'),
