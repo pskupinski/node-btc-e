@@ -78,15 +78,19 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
     params.nonce = Math.round((new Date()).getTime() / 1000);
   }
 
-  params.method = method;
-  var queryString = querystring.stringify(params);
+  var formData = {};
+  for (var key in params) {
+    formData[key] = params[key];
+  }
+  formData.method = method;
 
-  var sign = crypto.createHmac('sha512', self.secret).update(new Buffer(queryString)).digest('hex').toString();
+  var form = querystring.stringify(formData);
+  var sign = crypto.createHmac('sha512', self.secret).update(new Buffer(form)).digest('hex').toString();
 
   self._sendRequest({
     url: self.url,
     method: 'POST',
-    form: params,
+    form: form,
     headers: {
       Sign: sign,
       Key: self.apiKey
