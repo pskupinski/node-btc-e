@@ -32,6 +32,38 @@ var BTCE = function(apiKey, secret, options) {
   }
 };
 
+BTCE.prototype._sendRequest = function (options, callback) {
+  var self = this;
+  var requestOptions = {
+    timeout: self.timeout,
+    agent: self.agent,
+    strictSSL: self._strictSSL
+  };
+
+  for (var key in options) {
+    requestOptions[key] = options[key];
+  }
+
+  request(requestOptions, function(err, response, body) {
+    if(err || response.statusCode !== 200) {
+      return callback(new Error(err || response.statusCode));
+    }
+
+    var result;
+    try {
+      result = JSON.parse(body);
+    } catch(error) {
+      return callback(error);
+    }
+
+    if(result.error) {
+      return callback(new Error(result.error));
+    }
+
+    callback(null, result);
+  });
+};
+
 BTCE.prototype.makeRequest = function(method, params, callback) {
   var queryString,
       sign,
@@ -59,59 +91,18 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
     'Key': self.apiKey
   };
 
-  request({
+  self._sendRequest({
     url: self.url,
     method: 'POST',
     form: params,
     headers: headers,
-    timeout: self.timeout,
-    agent: self.agent,
-    strictSSL: self._strictSSL
-  }, function(err, response, body) {
-    if(err || response.statusCode !== 200) {
-      return callback(new Error(err ? err : response.statusCode));
-    }
-
-    var result;
-    try {
-      result = JSON.parse(body);
-    } catch(error) {
-      return callback(error);
-    }
-
-    if(result.success === 0) {
-      return callback(new Error(result.error));
-    }
-
-    callback(null, result['return']);
-  });
+  }, callback);
 };
 
 BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
-  var self = this;
-  request({
-    url: self.publicApiUrl + pair + '/' + method,
-    timeout: self.timeout,
-    agent: self.agent,
-    strictSSL: self._strictSSL
-  }, function(err, response, body) {
-    if(err || response.statusCode !== 200) {
-      return callback(new Error(err ? err : response.statusCode));
-    }
-
-    var result;
-    try {
-      result = JSON.parse(body);
-    } catch(error) {
-      return callback(error);
-    }
-
-    if(result.error) {
-      return callback(new Error(result.error));
-    }
-
-    callback(null, result);
-  });
+  this._sendRequest({
+    url: this.publicApiUrl + pair + '/' + method
+  }, callback);
 };
 
 BTCE.prototype.getInfo = function(callback) {
