@@ -11,7 +11,7 @@ var BTCE = function(apiKey, secret, options) {
   this.secret = secret;
   this._strictSSL = true;
 
-  if (typeof options === "function") {
+  if (typeof options === 'function') {
     this.nonce = options;
   } else if (options) {
     this.nonce = options.nonce;
