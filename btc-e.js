@@ -65,14 +65,10 @@ BTCE.prototype._sendRequest = function (options, callback) {
 };
 
 BTCE.prototype.makeRequest = function(method, params, callback) {
-  var queryString,
-      sign,
-      headers,
-      self = this;
+  var self = this;
 
   if(!self.apiKey || !self.secret) {
-    callback(new Error('Must provide API key and secret to use the trade API.'));
-    return;
+    return callback(new Error('Must provide API key and secret to use the trade API.'));
   }
 
   // If the user provided a function for generating the nonce, then use it.
@@ -83,19 +79,18 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
   }
 
   params.method = method;
-  queryString = querystring.stringify(params);
+  var queryString = querystring.stringify(params);
 
-  sign = crypto.createHmac('sha512', self.secret).update(new Buffer(queryString)).digest('hex').toString();
-  headers = {
-    'Sign': sign,
-    'Key': self.apiKey
-  };
+  var sign = crypto.createHmac('sha512', self.secret).update(new Buffer(queryString)).digest('hex').toString();
 
   self._sendRequest({
     url: self.url,
     method: 'POST',
     form: params,
-    headers: headers,
+    headers: {
+      Sign: sign,
+      Key: self.apiKey
+    }
   }, callback);
 };
 
