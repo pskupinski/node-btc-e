@@ -66,11 +66,14 @@ var BTCE = require('btc-e'),
     // be larger than the 32-bit unsigned integer max value of 4294967294.
     btce = new BTCE("YourApiKey", "YourSecret", {
       nonce: function() {
-        currentNonce++;
-        fs.writeFile("nonce.json", currentNonce);
-        return currentNonce;
+        return ++currentNonce;
       }
     });
+
+process.on('exit', function(code){
+  fs.writeFileSync("nonce.json", currentNonce);
+  process.exit();
+});
 
 btce.getInfo(function(err, info) {
   console.log(err, info);
