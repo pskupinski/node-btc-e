@@ -74,6 +74,7 @@ process.on('exit', function(code){
   fs.writeFileSync("nonce.json", currentNonce);
   process.exit();
 });
+process.on('SIGINT', process.exit);
 
 btce.getInfo(function(err, info) {
   console.log(err, info);
