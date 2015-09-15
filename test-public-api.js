@@ -7,7 +7,6 @@ btcePublic.info(function(err, data) {
     console.log(err, data);
 });
 
-/*
 btcePublic.ticker("btc_usd", function(err, data) {
     console.log("Test Ticker Method");
     console.log(err, data);
@@ -24,4 +23,3 @@ btcePublic.trades("btc_usd", function(err, data) {
     console.log("Test Trades Method");
     console.log(err, data);
 });
-*/
