@@ -98,17 +98,19 @@ BTCE.prototype.makeRequest = function(method, params, callback) {
   }, callback);
 };
 
-BTCE.prototype.makePublicApiRequest = function(pair, method, callback) {
+BTCE.prototype.makePublicApiRequest = function(pair, limit, method, callback) {
 
+    var url =  this.publicApiUrl + method;
     if (pair) {
-        this._sendRequest({
-            url: this.publicApiUrl + method + '/' + pair
-        }, callback);
-    } else {
-        this._sendRequest({
-            url: this.publicApiUrl + method
-        }, callback);
+        url += '/' + pair;
     }
+    if (limit) {
+        url += "?limit=" + limit;
+    }
+
+    this._sendRequest({
+    url: url
+  }, callback);
 
 };
 
@@ -160,20 +162,20 @@ BTCE.prototype.cancelOrder = function(paramsOrOrderId, callback) {
   this.makeRequest('CancelOrder', input, callback);
 };
 
-BTCE.prototype.info = function (callback) {
-    this.makePublicApiRequest(false, 'info', callback);
+BTCE.prototype.info = function ( callback) {
+    this.makePublicApiRequest(false, false, 'info', callback);
 };
 
 BTCE.prototype.ticker = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'ticker', callback);
+  this.makePublicApiRequest(pair, false, 'ticker', callback);
 };
 
-BTCE.prototype.trades = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'trades', callback);
+BTCE.prototype.trades = function(pair, limit, callback) {
+  this.makePublicApiRequest(pair, limit, 'trades', callback);
 };
 
-BTCE.prototype.depth = function(pair, callback) {
-  this.makePublicApiRequest(pair, 'depth', callback);
+BTCE.prototype.depth = function(pair, limit, callback) {
+  this.makePublicApiRequest(pair, limit, 'depth', callback);
 };
 
 
