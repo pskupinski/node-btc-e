@@ -1,21 +1,13 @@
 node-btc-e
 =====
 
-An unofficial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation) ~~including v2 public api methods(depth, fee, ticker, and trades).~~
+An unofficial node.js client for the [btc-e trade api](https://btc-e.com/api/documentation)
 Updated to work with BTC-e V3 Public API
-
-## Installation
-
-node-btc-e is available as `btc-e` on npm.
-
-```
-npm install btc-e
-```
 
 ## Usage
 
 ```javascript
-var BTCE = require('btc-e'),
+var BTCE = require('./btc-e.js'),
     btceTrade = new BTCE("YourApiKey", "YourSecret"),
     // No need to provide keys if you're only using the public api methods.
     btcePublic = new BTCE();
@@ -45,7 +37,7 @@ When passed as a hash, the following options are supported:
 * strict_ssl - `true` by default, but can be set to `false` if desired, such as if btc-e has problems with their SSL certificate again.
 
 ```javascript
-var BTCE = require('btc-e'),
+var BTCE = require('./btc-e'),
     HttpsAgent = require('agentkeepalive').HttpsAgent,
     btceTrade = new BTCE("YourApiKey", "YourSecret", {
       agent: new HttpsAgent()
@@ -59,7 +51,7 @@ By default the module generates a nonce based on the current timestamp in second
 btc-e expects every nonce given to be greater than the previous one for each api key you have, this presents a big problem when trying to do multiple async calls with the same api key since there is no guarantee that the first api call will be processed before the second one and so on.  Chaining calls synchronously(take a look at promises with [q.js](https://github.com/kriskowal/q) for help with that) or using multiple clients, each with their own API key are the only way around that problem.
 
 ```javascript
-var BTCE = require('btc-e'),
+var BTCE = require('./btc-e'),
     fs = require('fs'),
     currentNonce = fs.existsSync("nonce.json") ? JSON.parse(fs.readFileSync("nonce.json")) : 0,
     // Provide a nonce generation function as the third parameter if desired.
@@ -82,9 +74,8 @@ btce.getInfo(function(err, info) {
 });
 ```
 
-## Reference
-
-A method-by-method [reference](https://github.com/pskupinski/node-btc-e/wiki/API-Reference) is available on the wiki.
+## Credits
+All credits goes to [pskupinski](https://github.com/pskupinski/node-btc-e), as initial creator. 
 
 ## License
 
